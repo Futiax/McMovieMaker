@@ -12,6 +12,6 @@ Il manque comme fonctionalité pour l'instant :
 						les 4 variante de couleur
 
 						la supportabilité d'utiliser plusieur item frame
-			
-                                                un gug qui fait que le noir est transparent
+	
+                                                un bug qui fait que le noir est transparent
                                                 
