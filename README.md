@@ -7,9 +7,11 @@ Si des gens veullent m'aider j'accepte volontier.
 
 Le prgoramme est en pyhton.
 
-Il manque comme fonctionalité pour l'instant :  les 4 variante de couleur
+Il manque comme fonctionalité pour l'instant :  
 
-												la supportabilité d'utiliser plusieur item frame
+						les 4 variante de couleur
+
+						la supportabilité d'utiliser plusieur item frame
 			
                                                 un gug qui fait que le noir est transparent
                                                 
