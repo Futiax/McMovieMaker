@@ -13,5 +13,5 @@ Il manque comme fonctionalité pour l'instant :
 
 						la supportabilité d'utiliser plusieur item frame
 	
-                                                un bug qui fait que le noir est transparent
+                                           un bug qui fait que le noir est transparent
                                                 
