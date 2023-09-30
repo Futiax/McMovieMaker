@@ -1,0 +1,63 @@
+Bonjour, 
+prener votre fichier vidéo (pas plus de 30 à 40 sec)
+
+!!!Plus il est long plus il faut de ram et attendre en jeux avant que l'animation atteigne les 10 fps.!!!
+
+extraire si ce n'est pas déja fait 
+
+ouvrez votre console de commande
+
+allez sur le bureau a l'aide de la commande : cd Desktop
+
+ taper : py Videomaker.py
+
+le texte en rouge ou jaune n'est pas grave
+
+!!!le chemin n'est pas obligatoir si votre fichier Videomaker.py et dans le même dossier que votre vidéo
+alors si c'est votre cas taper juste le nom de la vidéo.!!!
+
+Liser le texte et si vous savez pas faire pas de panique. taper windows et r puis dans l'interface taper 
+%appdata%\.minecraft
+
+allez dans saves
+
+chercher le dossier de votre monde
+
+allez dans data soit on remarque aucun fichier de la forme map_{Nombre}.dat alors on prends 0 + 1 = 1
+soit on a un ou plusieur fichier alors on cherche selui avec le plus gros chiffre
+la c'est 1
+donc on prend 1 + 1 = 2
+
+attendre cela prend quelque minutes
+
+on peut ouvrir le dossier pour voir la progression
+
+on peut aussi allez voir les fonctions
+
+les instruction bug mais vous sa marchera donc on vas l'installer
+
+vous n'avez rien vue
+
+vous pouvez utiliser cette technique ou celle de tout a l'heure.
+désolé j'arive pas a partager mon écran.
+voila c'est bon
+vous copiez collez
+vous revenez au dossier d'avant
+vous faite controle a puis controle c et enfin controle v dans le dossier du monde.
+petit ciné cosi
+
+dans votre jeu tapez /function fmm:load
+vous obtenez alors cette item avec un nom en gras
+utiliser celui la pour l'écran
+vous le poser puis vous faite :
+/function fmm:tree/0
+au début sa bug mais comme dit plus tôt après quelque passage de la vidéo se sera fluide
+et sa recommence une 2eme fois une 3eme un 4eme
+etc et a chaque fois le nombre d'image augment jusquèa atteindre 10 fps
+je vous montre sur mon serveur le rendue après quelque minute
+ps venez jouer c'est un serveur mini jeux
+2 sec le serveur démarre il a presque finit.
+D'ailleur l'exemple est en 2*3 item frame mait est fait a la main 
+peut être dans une futur mise a jour
+l'audio sera surement bientot ajouter
+pour la music utiliser ce logiciel
