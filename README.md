@@ -10,6 +10,8 @@ Le prgoramme est en pyhton.
 Il manque comme fonctionalité pour l'instant :  
 
 ~~les 4 variante de couleur~~
+
 la supportabilité d'utiliser plusieur item frame
+
 ~~un bug qui fait que le noir est transparent~~
                                                 
