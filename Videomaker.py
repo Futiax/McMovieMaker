@@ -12,10 +12,10 @@ import cv2
 def determine_bloc_minecraft(r, g, b):
     # Tableau de correspondance des couleurs
     couleurs_minecraft = {
-        ( 0, 0, 0, ) : "0"
-        ( 0, 0, 0, ) : "1"
-        ( 0, 0, 0, ) : "2"
-        ( 0, 0, 0, ) : "3"
+#        ( 0, 0, 0, ) : "0"
+#        ( 0, 0, 0, ) : "1"
+#        ( 0, 0, 0, ) : "2"
+#        ( 0, 0, 0, ) : "3"
         ( 90, 126, 40, ) : "4"
         ( 109, 153, 48, ) : "5"
         ( 127, 178, 56, ) : "6"
