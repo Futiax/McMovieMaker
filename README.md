@@ -6,7 +6,7 @@ A minecraft map movie maker
 Le prgoramme est en pyhton.
 
 Il manque comme fonctionalité pour l'instant :  
->~~Les 4 variante de couleur~~
->La supportabilité d'utiliser plusieur item frame
->~~Un bug qui fait que le noir est transparent~~
+> ~~Les 4 variante de couleur~~
+> La supportabilité d'utiliser plusieur item frame
+> ~~Un bug qui fait que le noir est transparent~~
                                                 
