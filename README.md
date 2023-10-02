@@ -18,8 +18,8 @@ Minecraft movie maker
 - Puis tu tapé une a une les commandes suivantes :
 
 ```cd Desktop
-  python Moviemaker.py
-## Tu suis ce qui il a écrit dans le terminal 
+   pip install os
+   python Moviemaker.py
 ```
 
 ## Documentation
