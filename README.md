@@ -3,9 +3,11 @@ Minecraft movie maker
 ## Authors
 
 - [@Futiax](https://github.com/Futiax)
+
+
+## Authors
+
 - [@NoeCartie](https://github.com/NoeCartier)
-
-
 
 
 ## Documentation
