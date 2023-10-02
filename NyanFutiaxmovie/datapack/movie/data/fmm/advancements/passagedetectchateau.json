@@ -1,0 +1,17 @@
+{
+  "criteria": {
+    "click": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:interaction",
+          "team": "281.73.190",
+          "location": {}
+        }
+      }
+    }
+  },
+  "rewards": {
+    "function": "draft:animate_black"
+  }
+}
