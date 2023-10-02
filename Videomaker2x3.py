@@ -338,16 +338,23 @@ def process_video(video_path,outputnum,videoname):
             imgtodat(frame, outputname)  # Appel avec deux arguments
             outputnum += 1
         frame_count += 1
-video_path = input("Chemain de la vidéo (path/to/video.mp4): ")
-videoname = input("Nom de la vidéo (Nom que vous voulez pour le datapack): ") + 'Futiaxmovie'
-num = int(input("Quelle numéro pour la première map (allez dans le dossier data de votre monde et chercher le fichier map_XX.dat le plus élevée et ajouter 1) ? "))
-cmd = "Xcopy /E /I " + '"ne pas toucher" ' + videoname 
-os.system(cmd) 
-process_video(video_path,num,videoname)
-print("Conversion terminée, ne fermez pas la fenêtre tout de suite, les instructions suivantes vont vous permettre de mettre le datapack dans votre monde")
-sleep(500)
-print("Vous obtener un dossier dedans il y a un dossier datapack avec un autre dossier movie qu'il faut mettre dans le dossier datapack de votre monde.")
-sleep (5000)
-print("Enfin vous devez mettre les fichiers map_XX.dat dans le dossier data du dossier générer dans le dossier data de votre monde.")
-sleep(5000)
-print("Une fois cela fait pouvez fermer la fenêtre.")
+
+def prog() :
+    cap = cv2.VideoCapture("rien123456789azertyuiop")
+    while not cap.isOpened() :
+        video_path = input("Chemain de la vidéo (path/to/video.mp4): ")
+        cap = cv2.VideoCapture(video_path)
+    videoname = input("Nom de la vidéo (Nom que vous voulez pour le datapack): ") + 'Futiaxmovie'
+    num = int(input("Quelle numéro pour la première map (allez dans le dossier data de votre monde et chercher le fichier map_XX.dat le plus élevée et ajouter 1) ? "))
+    cmd = "Xcopy /E /I " + '"ne pas toucher" ' + videoname 
+    os.system(cmd) 
+    process_video(video_path,num,videoname)
+    print("Conversion terminée, ne fermez pas la fenêtre tout de suite, les instructions suivantes vont vous permettre de mettre le datapack dans votre monde")
+    sleep(500)
+    print("Vous obtener un dossier dedans il y a un dossier datapack avec un autre dossier movie qu'il faut mettre dans le dossier datapack de votre monde.")
+    sleep (5000)
+    print("Enfin vous devez mettre les fichiers map_XX.dat dans le dossier data du dossier générer dans le dossier data de votre monde.")
+    sleep(5000)
+    print("Une fois cela fait pouvez fermer la fenêtre.")
+
+prog()
