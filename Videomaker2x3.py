@@ -307,7 +307,7 @@ def imgtodat(frame,exportname):
                 r,g,b = frame.getpixel((x,y))
                 #assigne sur la liste les valeurs de r,g,b pour dans la colonne i
                 list += (r,g,b)
-        byar = bytes(liste)
+        byar = bytes(list)
         nbtfile = nbt.NBTFile("data.dat", 'dat')
         if "data" not in nbtfile:
             nbtfile["data"] = nbt.TAG_Compound()
@@ -335,8 +335,10 @@ def process_video(video_path,outputnum,videoname):
             break
         if frame_count % frame_skip == 0:
             with open(os.path.join(filename), "w") as f:
-                cmd =  "data modify entity @e[limit=1,tag=screen1] Item set value {id:\"minecraft:filled_map\",tag:{map:" + str(outputnum) + "},Count:1b}"
-                f.write(cmd + "\n")
+                for i in range(1,7):
+                    cmd =  "data modify entity @e[limit=1,tag=screen"+ i +"] Item set value {id:\"minecraft:filled_map\",tag:{map:" + str(outputnum) + "},Count:1b}"
+                    f.write(cmd + "\n")
+                    outputnum += 1
                 f.write("schedule function fmm:tree/" + str(tempnum+1) + " 2t")
             
             outputname = videoname + "/data/map_" + str(outputnum) + ".dat"
