@@ -278,15 +278,6 @@ def expandtorectangle(pil_img, background_color):
     result = Image.new('RGB', (target_width, target_height), background_color) # Create the result image with the correct background color
     result.paste(resized_img, ((target_width - new_width) // 2, (target_height - new_height) // 2)) # Paste the resized image into the result image
     return result
-def convimg(im):
-    im_thumb = expandtorectangle(im, (1000, 1000, 1000))
-    ims = im_thumb.size
-    #print(ims)
-    mywidth = 
-    wpercent = (mywidth/float(im_thumb.size[0]))
-    hsize = int((float(im_thumb.size[1])*float(wpercent)))
-    im_thumb = im_thumb.resize((mywidth,hsize), Image.LANCZOS)
-    return im_thumb
 def colorcv(r , g , b):
     bloc_minecraft_id = determine_bloc_minecraft(r, g, b)
     # Faire quelque chose avec le bloc Minecraft obtenu
@@ -343,6 +334,7 @@ def process_video(video_path,outputnum,videoname):
             
             outputname = videoname + "/data/map_" + str(outputnum) + ".dat"
             print(outputname)
+            frame = expandtorectangle(frame, (1000, 1000, 1000))
             imgtodat(frame, outputname)  # Appel avec deux arguments
             outputnum += 1
         frame_count += 1
