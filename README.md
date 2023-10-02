@@ -21,6 +21,9 @@ Minecraft movie maker
    pip install os
    python Moviemaker.py
 ```
+- Lire le terminal
+
+- Si besoin une vidéo explicative peut aider
 
 ## Documentation
 
@@ -48,6 +51,8 @@ Minecraft movie maker
 - ~~Add transparency around imported image~~
 
 - Support 2X3 frames
+
+- Redo a new tutorial video
 
 - Support any frames ratio
 
