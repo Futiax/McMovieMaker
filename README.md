@@ -1,12 +1,57 @@
-# MovieMaker
-A minecraft map movie maker
+Minecraft movie maker
 
-[Tuto] :https://www.google.com](https://youtu.be/FCKrOrIVkLs)https://youtu.be/FCKrOrIVkLs
+## Authors
 
-Le prgoramme est en pyhton.
+- [@Futiax](https://github.com/Futiax)
+- [@NoeCartie](https://github.com/NoeCartier)
 
-Il manque comme fonctionalité pour l'instant :  
-> ~~Les 4 variantes de couleur~~  <br />
-> La possibilité d'utiliser plusieurs item frames  <br />
-> ~~Un bug qui fait que le noir est transparent~~  <br />
-                                                
+
+
+
+## Documentation
+
+[A faire](https://youtu.be/dQw4w9WgXcQ?si=DbouwqCV9CGxgLdx&t=1)
+
+
+
+
+## Demo
+
+[Here](https://www.youtube.com/watch?v=FCKrOrIVkLs)
+
+
+
+## Roadmap
+
+- ~~Convert image to bytes~~
+
+- ~~Write on map.dat file~~
+
+- ~~Convert movie to picture to map~~
+
+- ~~Additional colors~~
+
+- ~~Add transparency around imported image~~
+
+- Support 2X3 frames
+
+- Support any frames ratio
+
+- Choose your frame rate
+
+- Convert music of video to midi
+
+- Convert midi to music datapack
+
+- Merging the two datapacks
+
+- Optimizing the whole
+
+
+## Tech Stack
+
+**Script :** Python
+
+**Input file :** mp4 and mov (The rest has not been tested).
+
+**Output file :** map_###.dat file json class file and mcfunction file.
