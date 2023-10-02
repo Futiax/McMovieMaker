@@ -10,6 +10,18 @@ Minecraft movie maker
 - [@NoeCartie](https://github.com/NoeCartier)
 
 
+## Installation
+
+- Install [python](https://www.python.org/ftp/python/3.12.0/python-3.12.0-amd64.exe)
+- Tu extrait le zip sur ton bureau
+- Tu ouvre un terminal en tapant windows puis cmd et ouvrir un terminal de commande.
+- Puis tu tapé une a une les commandes suivantes :
+
+```cd Desktop
+  python Moviemaker.py
+## Tu suis ce qui il a écrit dans le terminal 
+```
+
 ## Documentation
 
 [A faire](https://youtu.be/dQw4w9WgXcQ?si=DbouwqCV9CGxgLdx&t=1)
