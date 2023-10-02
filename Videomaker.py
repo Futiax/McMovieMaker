@@ -254,7 +254,8 @@ def determine_bloc_minecraft(r, g, b):
         ( 90, 119, 106, ) : "244",
         ( 109, 144, 129, ) : "245",
         ( 127, 167, 150, ) : "246",
-        ( 67, 89, 80, ) : "247"
+        ( 67, 89, 80, ) : "247",
+        ( 1000, 1000, 1000, ) : "0"
     }
 
     # Recherche de la couleur la plus proche dans le tableau
@@ -276,7 +277,7 @@ def expand2square(pil_img, background_color):
             result.paste(pil_img, ((height - width) // 2, 0))
             return result
 def convimg(im):
-    im_thumb = expand2square(im, (0, 0, 0))
+    im_thumb = expand2square(im, (1000, 1000, 1000))
     ims = im_thumb.size
     #print(ims)
     mywidth = 128
