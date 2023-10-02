@@ -20,17 +20,52 @@ background_color = (0, 0, 0)  # Black background
 im_result = expand_to_rectangle(im, target_width, target_height, background_color)
 im_result.save('result.png')
 
-for i in range(0,6):
-    list = []
-    ligne = int(i/3)
-    colonne = i%3
-    print(ligne,colonne)
-    pixeldl = ligne*128
-    pixeldc = colonne*128
-    print(pixeldl,pixeldc,":")
-    for y in range(pixeldl,pixeldl+128):
-        for x in range(pixeldc,pixeldc+128):
-            r,g,b = im_result.getpixel((x,y))
-            #assigne sur la liste les valeurs de r,g,b pour dans la colonne i
-            list += (r,g,b)
-open.write()
+def imgtodat(frame,exportname):
+    for i in range(0,6):
+        list = []
+        ligne = int(i/3)
+        colonne = i%3
+        print(ligne,colonne)
+        pixeldl = ligne*128
+        pixeldc = colonne*128
+        print(pixeldl,pixeldc,":")
+        for y in range(pixeldl,pixeldl+128):
+            for x in range(pixeldc,pixeldc+128):
+                r,g,b = im_result.getpixel((x,y))
+                #assigne sur la liste les valeurs de r,g,b pour dans la colonne i
+                list += (r,g,b)
+        byar = bytes(liste)
+        nbtfile = nbt.NBTFile("data.dat", 'dat')
+        if "data" not in nbtfile:
+            nbtfile["data"] = nbt.TAG_Compound()
+        if "colors" not in nbtfile["data"]:
+            nbtfile["data"]["colors"] = nbt.TAG_Byte_Array()
+        nbtfile["data"]["colors"].value = byar
+        nbtfile.write_file(exportname)
+
+
+
+
+
+
+
+
+#liste = []
+#image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+#image = convimg(image)
+#x , y = image.size
+##print("taille x : ",x,"taille y : ",y)
+#im = image.load()
+#for i in range(y):
+#    for j in range(x):
+#        r,g,b = im[j,i]
+#        liste += [colorcv(r,g,b)]
+##convert list to string
+#byar = bytes(liste)
+#nbtfile = nbt.NBTFile("data.dat", 'dat')
+#if "data" not in nbtfile:
+#    nbtfile["data"] = nbt.TAG_Compound()
+#if "colors" not in nbtfile["data"]:
+#    nbtfile["data"]["colors"] = nbt.TAG_Byte_Array()
+#nbtfile["data"]["colors"].value = byar
+#nbtfile.write_file(exportname)
