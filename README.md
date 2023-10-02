@@ -5,7 +5,7 @@ Minecraft movie maker
 - [@Futiax](https://github.com/Futiax)
 
 
-## Authors
+## Contributors
 
 - [@NoeCartie](https://github.com/NoeCartier)
 
