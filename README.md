@@ -1,8 +1,10 @@
 Minecraft movie maker
 
-## Supportability
+## Info
 
 Pour l'instant uniquement sur windows.
+
+Compter environ 90sec par seconde de vidéo
 
 ## Authors
 
