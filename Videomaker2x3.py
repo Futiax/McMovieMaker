@@ -297,7 +297,7 @@ def imgtodat(frame,exportname):
             for x in range(pixeldc,pixeldc+128):
                 r,g,b = frame.getpixel((x,y))
                 #assigne sur la liste les valeurs de r,g,b pour dans la colonne i
-                list += (r,g,b)
+                list += colorcv(r,g,b)
         byar = bytes(list)
         nbtfile = nbt.NBTFile("data.dat", 'dat')
         if "data" not in nbtfile:
