@@ -1,5 +1,9 @@
 Minecraft movie maker
 
+## Supportability
+
+Pour l'instant uniquement sur windows.
+
 ## Authors
 
 - [@Futiax](https://github.com/Futiax)
@@ -66,6 +70,7 @@ Minecraft movie maker
 
 - Optimizing the whole
 
+- Support linux
 
 ## Tech Stack
 
