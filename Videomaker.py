@@ -285,12 +285,6 @@ def convimg(im):
     hsize = int((float(im_thumb.size[1])*float(wpercent)))
     im_thumb = im_thumb.resize((mywidth,hsize), Image.LANCZOS)
     return im_thumb
-def colorcv(r , g , b):
-    bloc_minecraft_id = determine_bloc_minecraft(r, g, b)
-    # Faire quelque chose avec le bloc Minecraft obtenu
-    #print("Pixel RGB:", (r, g, b), "Color Minecraft ID:", bloc_minecraft_id)
-    chiffre = int(bloc_minecraft_id)
-    return abs(chiffre)
 def imgtodat(frame,exportname):
     liste = []
     image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
@@ -301,7 +295,7 @@ def imgtodat(frame,exportname):
     for i in range(y):
         for j in range(x):
             r,g,b = im[j,i]
-            liste += [colorcv(r,g,b)]
+            liste += [determine_bloc_minecraft(r,g,b)]
     #convert list to string
     byar = bytes(liste)
     nbtfile = nbt.NBTFile("data.dat", 'dat')
@@ -343,7 +337,7 @@ def process_video(video_path,outputnum,videoname):
 video_path = input("Chemain de la vidéo (path/to/video.mp4): ")
 videoname = input("Nom de la vidéo (Nom que vous voulez pour le datapack): ") + 'Futiaxmovie'
 num = int(input("Quelle numéro pour la première map (allez dans le dossier data de votre monde et chercher le fichier map_XX.dat le plus élevée et ajouter 1) ? "))
-cmd = "Xcopy /E /I " + '"ne pas toucher" ' + videoname 
+cmd = "Xcopy /E /I " + 'warning ' + videoname 
 os.system(cmd) 
 process_video(video_path,num,videoname)
 print("Conversion terminée, ne fermez pas la fenêtre tout de suite, les instructions suivantes vont vous permettre de mettre le datapack dans votre monde")
