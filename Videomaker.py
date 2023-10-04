@@ -258,12 +258,13 @@ def determine_bloc_minecraft(r, g, b):
         ( 1000, 1000, 1000, ) : "0"
     }
 
-    # Recherche de la couleur la plus proche dans le tableau
     couleur_proche = min(couleurs_minecraft.keys(), key=lambda c: sum(abs(a - b) for a, b in zip(c, (r, g, b))))
     #print(couleur_proche)
     # Récupération de l'ID du bloc Minecraft correspondant à la couleur trouvée
     bloc_minecraft_id = couleurs_minecraft.get(couleur_proche, "Inconnu")
-    return bloc_minecraft_id
+    z = int(bloc_minecraft_id)
+    colorvalue = r + g + b
+    return z , colorvalue
 def expand2square(pil_img, background_color):
         width, height = pil_img.size
         if width == height:
@@ -278,26 +279,31 @@ def expand2square(pil_img, background_color):
             return result
 def convimg(im):
     im_thumb = expand2square(im, (1000, 1000, 1000))
-    ims = im_thumb.size
-    #print(ims)
     mywidth = 128
     wpercent = (mywidth/float(im_thumb.size[0]))
     hsize = int((float(im_thumb.size[1])*float(wpercent)))
     im_thumb = im_thumb.resize((mywidth,hsize), Image.LANCZOS)
     return im_thumb
 def imgtodat(frame,exportname):
+    lastvalue = 999999999
+    lastid = 0 
     liste = []
+    listeID = []
     image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
     image = convimg(image)
     x , y = image.size
-    #print("taille x : ",x,"taille y : ",y)
     im = image.load()
     for i in range(y):
         for j in range(x):
             r,g,b = im[j,i]
-            liste += [determine_bloc_minecraft(r,g,b)]
-    #convert list to string
-    byar = bytes(liste)
+            colorvalue = r + g + b
+            if lastvalue - 15 <= colorvalue <= lastvalue + 15:
+                listeID.append(lastid)
+            else:
+                lastid , lastvalue = determine_bloc_minecraft(r, g, b)
+                listeID.append(lastid)
+        
+    byar = bytes(listeID)
     nbtfile = nbt.NBTFile("data.dat", 'dat')
     if "data" not in nbtfile:
         nbtfile["data"] = nbt.TAG_Compound()
@@ -308,9 +314,6 @@ def imgtodat(frame,exportname):
 def process_video(video_path,outputnum,videoname):
     basenum = outputnum
     cap = cv2.VideoCapture(video_path)
-    if not cap.isOpened():
-        print("Erreur : Impossible d'ouvrir la vidéo.")
-        return
     fps = cap.get(cv2.CAP_PROP_FPS)
     frame_skip = int(fps / 10)
     frame_count = 0
@@ -330,7 +333,6 @@ def process_video(video_path,outputnum,videoname):
                 f.write("schedule function fmm:tree/" + str(tempnum+1) + " 2t")
             
             outputname = videoname + "/data/map_" + str(outputnum) + ".dat"
-            print(outputname)
             imgtodat(frame, outputname)  # Appel avec deux arguments
             outputnum += 1
         frame_count += 1
