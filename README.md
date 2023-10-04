@@ -4,7 +4,9 @@ Minecraft movie maker
 
 Pour l'instant uniquement sur windows.
 
-Compter environ 90sec par seconde de vidéo
+Compter environ 4sec par seconde de vidéo
+Soit 15sec de video/minute de conversion
+Compter un rapport de environ 1sec/1sec pour une vidéo en noire et blanc
 
 ## Authors
 
