@@ -304,7 +304,7 @@ def imgtodat(frame,exportname):
                 listeID.append(lastid)
         
     byar = bytes(listeID)
-    nbtfile = nbt.NBTFile("data.dat", 'dat')
+    nbtfile = nbt.NBTFile("map_0.dat", 'dat')
     if "data" not in nbtfile:
         nbtfile["data"] = nbt.TAG_Compound()
     if "colors" not in nbtfile["data"]:
