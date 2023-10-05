@@ -263,8 +263,7 @@ def determine_bloc_minecraft(r, g, b):
     # Récupération de l'ID du bloc Minecraft correspondant à la couleur trouvée
     bloc_minecraft_id = couleurs_minecraft.get(couleur_proche, "Inconnu")
     z = int(bloc_minecraft_id)
-    colorvalue = r + g + b
-    return z , colorvalue
+    return r , g , b , z 
 def expand2square(pil_img, background_color):
         width, height = pil_img.size
         if width == height:
@@ -285,7 +284,9 @@ def convimg(im):
     im_thumb = im_thumb.resize((mywidth,hsize), Image.LANCZOS)
     return im_thumb
 def imgtodat(frame,exportname):
-    lastvalue = 999999999
+    lr = 999999
+    lb = 999999
+    lb = 999999
     lastid = 0 
     liste = []
     listeID = []
@@ -296,11 +297,11 @@ def imgtodat(frame,exportname):
     for i in range(y):
         for j in range(x):
             r,g,b = im[j,i]
-            colorvalue = r + g + b
+            colorvalue = abs( r - lr ) + abs( g - lg ) + abs( b - lb )
             if lastvalue - 15 <= colorvalue <= lastvalue + 15:
                 listeID.append(lastid)
             else:
-                lastid , lastvalue = determine_bloc_minecraft(r, g, b)
+                lr ,lg , lb , lastvalue = determine_bloc_minecraft(r, g, b)
                 listeID.append(lastid)
         
     byar = bytes(listeID)
