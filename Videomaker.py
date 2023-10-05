@@ -285,7 +285,7 @@ def convimg(im):
     return im_thumb
 def imgtodat(frame,exportname):
     lr = 999999
-    lb = 999999
+    lg = 999999
     lb = 999999
     lastid = 0 
     liste = []
