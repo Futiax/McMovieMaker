@@ -297,7 +297,7 @@ def imgtodat(frame,exportname):
         for j in range(x):
             r,g,b = im[j,i]
             colorvalue = abs( r - lr ) + abs( g - lg ) + abs( b - lb )
-            if colorvalue- 15 <= colorvalue <= colorvalue + 15:
+            if colorvalue <= 15:
                 listeID.append(lastid)
             else:
                 lr ,lg , lb , lastid = determine_bloc_minecraft(r, g, b)
