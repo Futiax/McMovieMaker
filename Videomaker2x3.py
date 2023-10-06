@@ -305,7 +305,7 @@ def colorcv(r , g , b):
     #print("Pixel RGB:", (r, g, b), "Color Minecraft ID:", bloc_minecraft_id)
     chiffre = int(bloc_minecraft_id)
     return abs(chiffre)
-def imgtodat(frame,outputnum):
+def imgtodat(frame,outputnum, tolerance):
     lr = 255
     lg = 255
     lb = 34
@@ -322,7 +322,7 @@ def imgtodat(frame,outputnum):
                 r,g,b = frame[y,x]
                 #assigne sur la liste les valeurs de r,g,b pour dans la colonne i
                 colorvalue = abs( r - lr ) + abs( g - lg ) + abs( b - lb )
-                if colorvalue <= 15:
+                if colorvalue <= tolerance:
                     listeID.append(lastid)
                 else:
                     lr ,lg , lb , lastid = determine_bloc_minecraft(r, g, b)
@@ -336,7 +336,7 @@ def imgtodat(frame,outputnum):
             nbtfile["data"]["colors"] = nbt.TAG_Byte_Array()
         nbtfile["data"]["colors"].value = byar
         nbtfile.write_file(outputname)
-def process_video(video_path,outputnum,videoname):
+def process_video(video_path,outputnum,videoname,tolerance):
     basenum = outputnum
     cap = cv2.VideoCapture(video_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -364,16 +364,17 @@ def process_video(video_path,outputnum,videoname):
                 f.write("schedule function fmm:tree/" + str(tempnum+1) + " 2t")
             
             newframe = expandtorectangle(frame, (1000, 1000, 1000))
-            imgtodat(newframe, outputnum)  # Appel avec deux arguments
+            imgtodat(newframe, outputnum, tolerance)  # Appel avec deux arguments
         frame_count += 1
 
 
 video_path = input("Chemain de la vidéo (path/to/video.mp4): ")
 videoname = input("Nom de la vidéo (Nom que vous voulez pour le datapack): ") + 'Futiaxmovie'
+tolerance = int(input("Tolérance (0-255) (plus la valeur est élevée plus la vidéo rapide mais avec moin de couleur si la vidéo est en noire et blanc mettez 255 sinon éviter plus de 50): "))
 num = int(input("Quelle numéro pour la première map (allez dans le dossier data de votre monde et chercher le fichier map_XX.dat le plus élevée et ajouter 1) ? "))
 cmd = "Xcopy /E /I " + 'warning ' + videoname 
 os.system(cmd) 
-process_video(video_path,num,videoname)
+process_video(video_path,num,videoname,tolerance)
 print("Conversion terminée, ne fermez pas la fenêtre tout de suite, les instructions suivantes vont vous permettre de mettre le datapack dans votre monde")
 sleep(2)
 print("Vous obtener un dossier dedans il y a un dossier datapack avec un autre dossier movie qu'il faut mettre dans le dossier datapack de votre monde.")
