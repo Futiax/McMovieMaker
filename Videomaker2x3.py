@@ -9,7 +9,7 @@ from PIL import Image
 from nbt import nbt
 import numpy as np
 import cv2
-def determine_bloc_minecraft(r, g, b):
+def determine_bloc_minecraft(b, g, r):
     # Tableau de correspondance des couleurs
     couleurs_minecraft = {
         ( 90, 126, 40, ) : "4",
@@ -263,98 +263,122 @@ def determine_bloc_minecraft(r, g, b):
     couleur_proche = min(couleurs_minecraft.keys(), key=lambda c: sum(abs(a - b) for a, b in zip(c, (r, g, b))))
     #print(couleur_proche)
     # Récupération de l'ID du bloc Minecraft correspondant à la couleur trouvée
-    bloc_minecraft_id = couleurs_minecraft.get(couleur_proche, "Inconnu")
-    return bloc_minecraft_id
-def expandtorectangle(pil_img, background_color):
-    target_width = 384  # Desired width
-    target_height = 256 # Desired height
-    width, height = pil_img.size # Get current width and height
-    width_scale = target_width / width # Get scale factors
-    height_scale = target_height / height 
-    scale = min(width_scale, height_scale) # Get minimum scale factor
-    new_width = int(width * scale) # Calculate the size of the scaled image
+    z = int(couleurs_minecraft.get(couleur_proche, "Inconnu"))
+    return r , g , b , z 
+
+def expandtorectangle(frame, bg_color):
+    target_width = 384  # Largeur souhaitée
+    target_height = 256  # Hauteur souhaitée
+
+    # Récupérer les dimensions de l'image d'origine
+    height, width, _ = frame.shape
+
+    # Calculer le facteur d'échelle pour la largeur et la hauteur
+    scale_width = target_width / width
+    scale_height = target_height / height
+
+    # Utiliser le facteur d'échelle le plus petit pour éviter la déformation
+    scale = min(scale_width, scale_height)
+
+    # Calculer les nouvelles dimensions
+    new_width = int(width * scale)
     new_height = int(height * scale)
-    resized_img = pil_img.resize((new_width, new_height), Image.ANTIALIAS) # Create the resized image
-    result = Image.new('RGB', (target_width, target_height), background_color) # Create the result image with the correct background color
-    result.paste(resized_img, ((target_width - new_width) // 2, (target_height - new_height) // 2)) # Paste the resized image into the result image
+
+    # Redimensionner l'image sans déformation
+    resized_frame = cv2.resize(frame, (new_width, new_height))
+
+    # Créer une image vide avec le fond de couleur (1000, 1000, 1000) (gris clair)
+    result = np.full((target_height, target_width, 3), (1000, 1000, 1000), dtype=np.uint8)
+
+    # Calculer la position pour centrer l'image redimensionnée dans l'image vide
+    x_offset = (target_width - new_width) // 2
+    y_offset = (target_height - new_height) // 2
+
+    # Placer l'image redimensionnée dans l'image vide
+    result[y_offset:y_offset + new_height, x_offset:x_offset + new_width] = resized_frame
+
     return result
+
 def colorcv(r , g , b):
     bloc_minecraft_id = determine_bloc_minecraft(r, g, b)
     # Faire quelque chose avec le bloc Minecraft obtenu
     #print("Pixel RGB:", (r, g, b), "Color Minecraft ID:", bloc_minecraft_id)
     chiffre = int(bloc_minecraft_id)
     return abs(chiffre)
-def imgtodat(frame,exportname):
+def imgtodat(frame,outputnum):
+    lr = 255
+    lg = 255
+    lb = 34
+    lastid = 0 
     for i in range(0,6):
-        list = []
+        listeID = []
         ligne = int(i/3)
         colonne = i%3
-        print(ligne,colonne)
         pixeldl = ligne*128
         pixeldc = colonne*128
-        print(pixeldl,pixeldc,":")
+        #print(pixeldl,pixeldc,":")
         for y in range(pixeldl,pixeldl+128):
             for x in range(pixeldc,pixeldc+128):
-                r,g,b = frame.getpixel((x,y))
+                r,g,b = frame[y,x]
                 #assigne sur la liste les valeurs de r,g,b pour dans la colonne i
-                list += colorcv(r,g,b)
-        byar = bytes(list)
-        nbtfile = nbt.NBTFile("data.dat", 'dat')
+                colorvalue = abs( r - lr ) + abs( g - lg ) + abs( b - lb )
+                if colorvalue <= 15:
+                    listeID.append(lastid)
+                else:
+                    lr ,lg , lb , lastid = determine_bloc_minecraft(r, g, b)
+                    listeID.append(lastid)
+        outputname = videoname + "/data/map_" + str(outputnum+i-1) + ".dat"
+        byar = bytes(listeID)
+        nbtfile = nbt.NBTFile("map_0.dat", 'dat')
         if "data" not in nbtfile:
             nbtfile["data"] = nbt.TAG_Compound()
         if "colors" not in nbtfile["data"]:
             nbtfile["data"]["colors"] = nbt.TAG_Byte_Array()
         nbtfile["data"]["colors"].value = byar
-        nbtfile.write_file(exportname)
+        nbtfile.write_file(outputname)
 def process_video(video_path,outputnum,videoname):
     basenum = outputnum
     cap = cv2.VideoCapture(video_path)
-    if not cap.isOpened():
-        print("Erreur : Impossible d'ouvrir la vidéo.")
-        return
     fps = cap.get(cv2.CAP_PROP_FPS)
     frame_skip = int(fps / 10)
     frame_count = 0
     print("Attendez la fin de la conversion pour fermer la fenêtre ...")
-    while True:
+    while (cap.isOpened()):
         ret, frame = cap.read()
-        tempnum = int(outputnum-basenum)
+        tempnum = int((outputnum-basenum)/6)
         filename = videoname +"/datapack/movie/data/fmm/functions/tree/"+ str(tempnum) + ".mcfunction"    
         if not ret:
             with open(os.path.join(filename), "w") as f:
                 f.write("schedule function fmm:tree/0 1t")
+            with open(os.path.join(videoname +"/datapack/movie/data/fmm/functions/load.mcfunction"), "w") as f:
+                for h in range(1,7):
+                    texte =str("give @p item_frame{display:{Name:'"+'{"text":"Screen {h}","color":"gray","bold":true}'+"'"+'},EntityTag:{Tags:["screen{h}"]}'+'} 1\n')
+                    f.write(texte.replace("{h}",str(h)))
             break
         if frame_count % frame_skip == 0:
             with open(os.path.join(filename), "w") as f:
                 for i in range(1,7):
-                    cmd =  "data modify entity @e[limit=1,tag=screen"+ i +"] Item set value {id:\"minecraft:filled_map\",tag:{map:" + str(outputnum) + "},Count:1b}"
+                    cmd =  'data modify entity @e[limit=1,tag=screen' + str(i) + '] Item set value {id:"minecraft:filled_map",tag:{map:' + str(outputnum+1) + '}'+ ',Count:1b}'
                     f.write(cmd + "\n")
                     outputnum += 1
                 f.write("schedule function fmm:tree/" + str(tempnum+1) + " 2t")
             
-            outputname = videoname + "/data/map_" + str(outputnum) + ".dat"
-            print(outputname)
-            frame = expandtorectangle(frame, (1000, 1000, 1000))
-            imgtodat(frame, outputname)  # Appel avec deux arguments
-            outputnum += 1
+            newframe = expandtorectangle(frame, (1000, 1000, 1000))
+            imgtodat(newframe, outputnum)  # Appel avec deux arguments
         frame_count += 1
 
-def prog() :
-    cap = cv2.VideoCapture("rien123456789azertyuiop")
-    while not cap.isOpened() :
-        video_path = input("Chemain de la vidéo (path/to/video.mp4): ")
-        cap = cv2.VideoCapture(video_path)
-    videoname = input("Nom de la vidéo (Nom que vous voulez pour le datapack): ") + 'Futiaxmovie'
-    num = int(input("Quelle numéro pour la première map (allez dans le dossier data de votre monde et chercher le fichier map_XX.dat le plus élevée et ajouter 1) ? "))
-    cmd = "Xcopy /E /I " + '"ne pas toucher" ' + videoname 
-    os.system(cmd) 
-    process_video(video_path,num,videoname)
-    print("Conversion terminée, ne fermez pas la fenêtre tout de suite, les instructions suivantes vont vous permettre de mettre le datapack dans votre monde")
-    sleep(500)
-    print("Vous obtener un dossier dedans il y a un dossier datapack avec un autre dossier movie qu'il faut mettre dans le dossier datapack de votre monde.")
-    sleep (5000)
-    print("Enfin vous devez mettre les fichiers map_XX.dat dans le dossier data du dossier générer dans le dossier data de votre monde.")
-    sleep(5000)
-    print("Une fois cela fait pouvez fermer la fenêtre.")
 
-prog()
+video_path = input("Chemain de la vidéo (path/to/video.mp4): ")
+videoname = input("Nom de la vidéo (Nom que vous voulez pour le datapack): ") + 'Futiaxmovie'
+num = int(input("Quelle numéro pour la première map (allez dans le dossier data de votre monde et chercher le fichier map_XX.dat le plus élevée et ajouter 1) ? "))
+cmd = "Xcopy /E /I " + 'warning ' + videoname 
+os.system(cmd) 
+process_video(video_path,num,videoname)
+print("Conversion terminée, ne fermez pas la fenêtre tout de suite, les instructions suivantes vont vous permettre de mettre le datapack dans votre monde")
+sleep(2)
+print("Vous obtener un dossier dedans il y a un dossier datapack avec un autre dossier movie qu'il faut mettre dans le dossier datapack de votre monde.")
+sleep (10)
+print("Enfin vous devez mettre les fichiers map_XX.dat dans le dossier data du dossier générer dans le dossier data de votre monde.")
+sleep(15)
+print("Une fois cela fait pouvez fermer la fenêtre.")
+sleep(30)
