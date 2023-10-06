@@ -321,12 +321,19 @@ def imgtodat(frame,outputnum, tolerance):
             for x in range(pixeldc,pixeldc+128):
                 r,g,b = frame[y,x]
                 #assigne sur la liste les valeurs de r,g,b pour dans la colonne i
-                colorvalue = abs( r - lr ) + abs( g - lg ) + abs( b - lb )
-                if colorvalue <= tolerance:
-                    listeID.append(lastid)
+                if r == 1000 and g == 1000 and b == 1000:
+                    listeID.append(0)
+                elif r == 0 and g == 0 and b == 0:
+                    listeID.append(119)
+                elif r == 255 and g == 255 and b == 255:
+                    listeID.append(34)
                 else:
-                    lr ,lg , lb , lastid = determine_bloc_minecraft(r, g, b)
-                    listeID.append(lastid)
+                    colorvalue = abs( r - lr ) + abs( g - lg ) + abs( b - lb )
+                    if colorvalue <= tolerance:
+                        listeID.append(lastid)
+                    else:
+                        lr ,lg , lb , lastid = determine_bloc_minecraft(r, g, b)
+                        listeID.append(lastid)
         outputname = videoname + "/data/map_" + str(outputnum+i-1) + ".dat"
         byar = bytes(listeID)
         nbtfile = nbt.NBTFile("map_0.dat", 'dat')
@@ -358,7 +365,7 @@ def process_video(video_path,outputnum,videoname,tolerance):
         if frame_count % frame_skip == 0:
             with open(os.path.join(filename), "w") as f:
                 for i in range(1,7):
-                    cmd =  'data modify entity @e[limit=1,tag=screen' + str(i) + '] Item set value {id:"minecraft:filled_map",tag:{map:' + str(outputnum+1) + '}'+ ',Count:1b}'
+                    cmd =  'data modify entity @e[limit=1,tag=screen' + str(i) + '] Item set value {id:"minecraft:filled_map",tag:{map:' + str(outputnum+3) + '}'+ ',Count:1b}'
                     f.write(cmd + "\n")
                     outputnum += 1
                 f.write("schedule function fmm:tree/" + str(tempnum+1) + " 2t")
