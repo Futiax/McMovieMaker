@@ -363,7 +363,7 @@ def process_video(video_path,outputnum,videoname,tolerance):
         if frame_count % frame_skip == 0:
             with open(os.path.join(filename), "w") as f:
                 for i in range(1,7):
-                    cmd =  'data modify entity @e[limit=1,tag=screen' + str(i) + '] Item set value {id:"minecraft:filled_map",tag:{map:' + str(outputnum+3) + '}'+ ',Count:1b}'
+                    cmd =  'data modify entity @e[limit=1,tag=screen' + str(i) + '] Item set value {id:"minecraft:filled_map",tag:{map:' + str(outputnum-1) + '}'+ ',Count:1b}'
                     f.write(cmd + "\n")
                     outputnum += 1
                 f.write("schedule function fmm:tree/" + str(tempnum+1) + " 2t")
