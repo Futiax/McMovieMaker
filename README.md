@@ -58,9 +58,9 @@ Compter un rapport de environ 1sec/1sec pour une vidéo en noire et blanc
 
 - ~~Add transparency around imported image~~
 
-- Support 2X3 frames
+- ~~Support 2X3 frames~~
 
-- Redo a new tutorial video
+- ~~Redo a new tutorial video~~
 
 - Support any frames ratio
 
@@ -74,7 +74,7 @@ Compter un rapport de environ 1sec/1sec pour une vidéo en noire et blanc
 
 - Optimizing the whole
 
-- Support linux
+- ~~Support linux~~
 
 ## Tech Stack
 
