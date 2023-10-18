@@ -4,7 +4,7 @@ os.system("pip install Pillow")
 os.system("pip install numpy")
 os.system("pip install opencv-python")
 os.system("pip install time")
-from time import sleep
+from time import *
 from PIL import Image
 from nbt import nbt
 import numpy as np
@@ -258,7 +258,7 @@ couleurs_minecraft = {
 
     # Recherche de la couleur la plus proche dans le tableau
 COULEURS_DIFFS = {couleur: np.array(couleur) for couleur in couleurs_minecraft}
-def determine_bloc_minecraft(r, g, b):
+def determine_bloc_minecraft(b, g, r):
     couleur_pixel = np.array([r, g, b])
     
     # Utilisez NumPy pour calculer les différences de couleur vectoriellement
@@ -375,7 +375,12 @@ while framerate != 5 and framerate != 10:
     framerate = 10      #int(input("Frame rate (5 ou 10) (plus la valeur est élevée plus la vidéo est rapide mais plus la conversion est longue): "))
 cmd = "Xcopy /E /I " + 'warning ' + videoname 
 os.system(cmd) 
+time.gmtime(0)
 process_video(video_path , num , videoname , tolerance , width , height, framerate)
+cap = cv2.VideoCapture(video_path)
+fps = cap.get(cv2.CAP_PROP_FPS)
+temps = time.gmtime()
+print ("Conversion terminée en " + str(temps.tm_min) + " minutes et " + str(temps.tm_sec) + " secondes pour un total de " + str(width*height*fps) + " maps")
 print("Conversion terminée, ne fermez pas la fenêtre tout de suite, les instructions suivantes vont vous permettre de mettre le datapack dans votre monde")
 sleep(2)
 print("Vous obtener un dossier dedans il y a un dossier datapack avec un autre dossier movie qu'il faut mettre dans le dossier datapack de votre monde.")
