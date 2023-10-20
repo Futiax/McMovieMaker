@@ -346,8 +346,8 @@ def process_video(video_path , num , videoname , tolerance , width , height, fra
                 for h in range(1,width*height+1):
                     texte =str("give @p item_frame{display:{Name:'"+'{"text":"Screen {h}","color":"gray","bold":true}'+"'"+'},EntityTag:{Tags:["screen{h}"]}'+'} 1\n')
                     f.write(texte.replace("{h}",str(h)))
-             tellraw = str('tellraw @a ["",{"text":"Run \"","color":"red"},{"text":"/function ffm:tree/1","color":"yellow"},{"text":"\" to start video after place item frame.","color":"red"}]'))
-            f.write(tellraw)
+                tellraw = str('tellraw @a ["",{"text":"Run \\"","color":"red"},{"text":"/function ffm:tree/1","color":"yellow"},{"text":"\\" to start video after place item frame.","color":"red"}]'))
+                f.write(tellraw)
             break
         if frame_count % frame_skip == 0:
             with open(os.path.join(filename), "w") as f:
