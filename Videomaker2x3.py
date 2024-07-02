@@ -1,22 +1,22 @@
 import os
 import importlib.util
 import random
-#def is_library_installed(library_name):
-#    spec = importlib.util.find_spec(library_name)
-#    if spec==None:
-#        return False
-#    else:
-#        return True
-#if not is_library_installed('numpy') :
-#    os.system("pip install numpy")
-#if not is_library_installed('nbt'):
-#    os.system("pip install nbt")
-#if not is_library_installed('Pillow'):
-#    os.system("pip install Pillow")
-#if not is_library_installed('opencv-python'):
-#    os.system("pip install opencv-python")
-#if not is_library_installed('moviepy'):
-#    os.system("pip install moviepy")
+def is_library_installed(library_name):
+    spec = importlib.util.find_spec(library_name)
+    if spec==None:
+        return False
+    else:
+        return True
+if not is_library_installed('numpy') :
+    os.system("pip install numpy")
+if not is_library_installed('nbt'):
+    os.system("pip install nbt")
+if not is_library_installed('Pillow'):
+    os.system("pip install Pillow")
+if not is_library_installed('opencv-python'):
+    os.system("pip install opencv-python")
+if not is_library_installed('moviepy'):
+    os.system("pip install moviepy")
 from moviepy.editor import VideoFileClip
 from time import *
 from PIL import Image
