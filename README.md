@@ -2,9 +2,9 @@ Minecraft movie maker
 
 ## Info
 
-- Approximately 12 maps/sec
+- Approximately 12 maps/sec on classic video
 
-- Count on a ratio of about 30maps/sec for a black & white video.
+- And approximately 30maps/sec for a black & white video.
 
 ## Authors
 
