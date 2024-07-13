@@ -2,11 +2,11 @@ Minecraft movie maker
 
 ## Info
 
-Pour l'instant uniquement sur windows.
+For the moment, only on Windows.
 
-Compter environ 4sec par seconde de vidéo
-Soit 15sec de video/minute de conversion
-Compter un rapport de environ 1sec/1sec pour une vidéo en noire et blanc
+Approximately 4sec per second of video
+15sec of video/minute of conversion
+Count on a ratio of about 1sec/1sec for a black & white video.
 
 ## Authors
 
@@ -21,21 +21,21 @@ Compter un rapport de environ 1sec/1sec pour une vidéo en noire et blanc
 ## Installation
 
 - Install [python](https://www.python.org/ftp/python/3.12.0/python-3.12.0-amd64.exe)
-- Tu extrait le zip sur ton bureau
-- Tu ouvre un terminal en tapant windows puis cmd et ouvrir un terminal de commande.
-- Puis tu tapé une a une les commandes suivantes :
+- Extract the zip to your desktop
+- Open a terminal by typing windows then cmd and open a command terminal.
+- Then type the following commands one by one:
 
-```cd Desktop
-   pip install os
-   python Moviemaker.py
 ```
-- Lire le terminal
+cd Desktop
+python Moviemaker.py
+```
+- Read the terminal
 
-- Si besoin une vidéo explicative peut aider
+- If necessary, an explanatory video may help
 
 ## Documentation
 
-[A faire](https://youtu.be/dQw4w9WgXcQ?si=DbouwqCV9CGxgLdx&t=1)
+[Not done yet](https://youtu.be/dQw4w9WgXcQ?si=DbouwqCV9CGxgLdx&t=1)
 
 
 
