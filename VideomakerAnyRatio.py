@@ -19,6 +19,12 @@ cmc = {( 90, 126, 40, ) : "4",( 109, 153, 48, ) : "5",( 127, 178, 56, ) : "6",( 
 #Palette
 palette = [90,126,40,109,153,48,127,178,56,67,94,30,175,165,116,212,200,140,247,233,163,131,123,86,141,141,141,171,171,171,199,199,199,105,105,105,181,0,0,219,0,0,255,0,0,135,0,0,114,114,181,138,138,219,160,160,255,85,85,135,119,119,119,144,144,144,167,167,167,89,89,89,0,88,0,0,107,0,0,124,0,0,66,0,181,181,181,219,219,219,135,135,135,116,119,131,141,144,158,164,168,184,87,89,98,107,77,55,130,94,66,151,109,77,80,58,41,80,80,80,96,96,96,112,112,112,59,59,59,45,45,181,55,55,219,64,64,255,34,34,135,102,84,51,123,102,62,143,119,72,76,63,38,181,179,174,219,217,211,255,252,245,135,134,130,153,90,36,186,109,44,216,127,51,114,67,27,126,54,153,153,65,186,178,76,216,94,40,114,72,109,153,88,132,186,102,153,216,54,81,114,163,163,36,197,197,44,229,229,51,121,121,27,90,145,18,109,175,22,127,204,25,67,108,13,172,90,117,208,109,142,242,127,165,128,67,87,54,54,54,65,65,65,76,76,76,40,40,40,109,109,109,132,132,132,153,153,153,81,81,81,54,90,109,65,109,132,76,127,153,40,67,81,90,45,126,109,54,153,127,63,178,67,33,94,36,54,126,44,65,153,51,76,178,27,40,94,72,54,36,88,65,44,102,76,51,54,40,27,72,90,36,88,109,44,102,127,51,54,67,27,109,36,36,132,44,44,153,51,51,81,27,27,18,18,18,22,22,22,25,25,25,13,13,13,178,169,55,215,205,66,250,238,77,132,126,41,65,155,151,79,188,183,92,219,213,49,116,113,53,91,181,64,110,219,74,128,255,39,68,135,0,154,41,0,187,50,0,217,58,0,115,31,92,61,35,111,74,42,129,86,49,68,46,26,80,1,0,96,2,0,112,2,0,59,1,0,148,126,114,180,152,138,209,177,161,111,94,85,113,58,26,137,71,31,159,82,36,84,43,19,106,62,77,128,75,93,149,87,108,79,46,57,80,77,98,96,93,119,112,108,138,59,57,73,73,83,38,89,101,46,103,117,53,55,62,28,132,94,26,160,114,31,186,133,36,99,70,19,40,29,25,49,35,30,57,41,35,30,22,19,114,55,55,138,66,67,160,77,78,85,41,41,62,65,65,75,79,79,87,92,92,46,49,49,96,76,70,116,92,84,135,107,98,72,57,52,54,44,65,65,53,79,76,62,92,40,33,49,87,52,62,105,63,76,122,73,88,65,39,47,54,58,30,65,71,36,76,82,42,40,43,22,54,36,25,65,43,30,76,50,35,40,26,19,26,16,11,32,19,14,37,22,16,20,12,8,101,43,33,122,52,40,142,60,46,75,32,24,105,45,69,127,54,83,148,63,97,78,33,51,134,34,35,163,41,42,189,48,49,100,25,26,16,89,95,19,108,115,22,126,134,12,67,71,65,18,21,79,22,25,92,25,29,49,13,15,61,31,44,74,38,53,86,44,62,46,23,33,41,101,99,50,122,120,58,142,140,31,75,74,71,71,71,86,86,86,100,100,100,53,53,53,14,128,94,17,155,114,20,180,133,11,95,70,153,124,104,186,150,126,216,175,147,114,93,78,90,119,106,109,144,129,127,167,150,67,89,80]
 
+
+def process_frame(frame, num, videoname, width, height):
+    newframe = reformatframe(frame, (0, 0, 0), width, height)
+    imgtodat(newframe, num, height, width)
+
+
 def reformatframe(frame, bg_color,target_width, target_height):
     target_width = target_width*128                                                             # Largeur souhaitée
     target_height = target_height*128                                                           # Hauteur souhaitée
@@ -40,6 +46,7 @@ def reformatframe(frame, bg_color,target_width, target_height):
     quantized_image = pil_image.quantize(palette=palette_image, dither=Image.NONE)
     frameout = cv2.cvtColor(np.array(quantized_image.convert('RGB')), cv2.COLOR_RGB2BGR)
     return frameout
+
 
 def imgtodat(frame,outputnum, height ,width):
     nbrmap = height*width
@@ -69,6 +76,7 @@ def imgtodat(frame,outputnum, height ,width):
         nbtfile["data"]["colors"].value = byar
         nbtfile.write_file(outputname)
 
+
 def process_video(video_path , num , videoname , width , height, framerate):
     basenum = num
     capture = cv2.VideoCapture(video_path)
@@ -78,6 +86,7 @@ def process_video(video_path , num , videoname , width , height, framerate):
     totalframecount=0
     global frame_count
     videoframenbr = capture.get(cv2.CAP_PROP_FRAME_COUNT)
+    pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
     while (capture.isOpened()):
         totalframecount+=1
         readability, frame = capture.read()
@@ -110,6 +119,11 @@ def process_video(video_path , num , videoname , width , height, framerate):
                 f.write("schedule function fmm:tree/frame_" + str(tempnum+1) + " "+str(20/framerate)+"t")
             newframe = reformatframe(frame, (0, 0, 0),width,height )
             imgtodat(newframe, num, height, width)  # Appel avec deux arguments
+            pool.apply_async(process_frame, (frame, num, videoname, width, height))
+    pool.close()
+    pool.join()
+    
+
 if __name__ == "__main__":
     vframerates=[1,2,4,5,10,20]
     frame_count = 0
@@ -126,7 +140,6 @@ if __name__ == "__main__":
     framerate = 0
     while framerate not in vframerates:
         framerate = int(input("Frame rate (5/10/20) (the higher the value, the faster the video, but the longer the conversion time): "))
-
     time1 =int(time())
     os.makedirs(videoname+"/texture_pack/"+videoname+"/assets/minecraft/sounds/records") 
     os.mkdir(videoname+'/data')
