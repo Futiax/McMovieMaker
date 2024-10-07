@@ -8,7 +8,7 @@ def install(vf):
         os.system("pip install moviepy")
     import multiprocessing
     from moviepy.editor import VideoFileClip
-    from time import *
+    from time import sleep
     from PIL import Image
     from nbt import nbt
     import numpy as np
@@ -122,7 +122,7 @@ def process_video(video_path , num , videoname , width , height, framerate):
             pool.apply_async(process_frame, (frame, num, videoname, width, height))
     pool.close()
     pool.join()
-    
+
 
 if __name__ == "__main__":
     vframerates=[1,2,4,5,10,20]
@@ -152,11 +152,11 @@ if __name__ == "__main__":
     capture = cv2.VideoCapture(video_path)
     duration = capture.get(cv2.CAP_PROP_POS_MSEC)
     temps = int(time())-time1
-    print ("Conversion to " + str((temps//60)) + " minutes and " + str(temps%60) + " seconds for a total of " + str(frame_count) + " maps, or one map every " + str(temps/frame_count) + " secondes.")
+    print("Conversion to " + str((temps//60)) + " minutes and " + str(temps%60) + " seconds for a total of " + str(frame_count) + " maps, or one map every " + str(temps/frame_count) + " secondes.")
     print("Conversion complete, don't close the window just yet, the following instructions will allow you to put the datapack into your world")
     sleep(2)
     print("You'll get a datapack folder with the movie folder, which you'll need to put in your world's datapack folder.")
-    sleep (10)
+    sleep(10)
     print("A data folder with mapxx.dat files to add to your world's data folder.")
     sleep(10)
     print("And finally, a texture pack that changes the disc wait to the audio of your video.")
